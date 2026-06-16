@@ -54,6 +54,24 @@ For operators who want the highest level of key security, a hardware token keeps
 
 Nitrokey devices appear to GnuPG as standard OpenPGP smart cards via the `scdaemon` component. No additional drivers are needed on Linux. Logging software or scripts can invoke signing operations transparently — the operator touches the button on the device, and GnuPG completes the signature.
 
+### Galdralag — evolved hardware token for amateur radio
+
+For operators who need more than a generic OpenPGP smart card, **[Galdralag firmware](https://github.com/Supermagnum/Galdralag-firmware)** targets the **Baochip-1x** platform: an open, auditable hardware security token in the same class as Nitrokey, with open-source firmware and an open hardware stack (RTL, schematics, bootloader). It presents as a standard **OpenPGP card over USB CCID**, so GnuPG and `scdaemon` work as usual and private keys never leave the device.
+
+Where Galdralag goes further is **amateur-radio identity**. Standard OpenPGP User IDs are unstructured name-and-email strings — they have no proper home for a **callsign**, **DMR subscriber ID**, or club or net membership. Galdralag adds a **Galdra contact model**: machine-readable sidecar metadata on the host and in an on-chip **contact store**, so keys can be looked up and used by **callsign**, **DMR ID**, or **radio affiliation** without cramming that data into a User ID string.
+
+The **Galdra** host tools (`galdra`, `galdrad`, `galdra-gtk`) maintain a local contact directory and **callsign groups** for net, club, or team workflows — resolve recipients by callsign or DMR subscriber ID, operate on group membership, and optionally sync metadata to a key registry alongside exported public keys.
+
+Other features that set it apart from typical off-the-shelf tokens:
+
+- **Signed, user-upgradeable firmware** (Ed25519 boot chain) on fully open hardware
+- **Forward secrecy** via authenticated ephemeral ECDH for key-agreement sessions
+- **Shamir K-of-N** secret sharing for organisational or backup keys
+- **Stacked cipher profiles** — up to four independent AEAD layers, each with its own derived key
+- Optional **storage camouflage** mode when the token should not advertise its role
+
+Galdralag is experimental firmware under active development — ready for human testing on real hardware, but not yet a production-ready product. Review the repository documentation and apply your own judgement before deployment.
+
 ---
 
 ## Public Key Distribution
@@ -156,6 +174,7 @@ gpg --card-status
 | Key distribution             | QR code on QSL card / badge            | Frictionless at hamfests                     |
 | Web of trust                 | Hamfest key signing parties            | Real-world identity anchored to licence      |
 | Hardware key security        | Nitrokey (upgradeable firmware)        | Private key never leaves silicon             |
+| Amateur-radio token identity | [Galdralag](https://github.com/Supermagnum/Galdralag-firmware) on Baochip-1x | Callsign, DMR ID, and group-aware contact store |
 | Portable / battery operation | ChaCha20-Poly1305 + BrainpoolP256r1   | Low power, compact signatures                |
 | Narrowband digital modes     | Ed25519 (64 bytes fixed)               | Minimal on-air overhead                      |
 
