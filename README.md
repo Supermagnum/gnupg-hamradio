@@ -161,4 +161,3 @@ gpg --card-status
 
 GnuPG is already on your Linux machine. Your callsign is already a form of verified identity. Combining the two — with a Nitrokey in your pocket and a signed QSL card in hand — puts cryptographic accountability into amateur radio at essentially zero additional cost.
 
-73 de [YOUR_CALLSIGN]
