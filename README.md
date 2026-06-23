@@ -6,7 +6,7 @@ GNU Privacy Guard (GnuPG) is a free, open-source implementation of the OpenPGP s
 
 The amateur radio community has unique needs and issues around identity verification, logging integrity, and secure coordination. OpenPGP addresses all of these without running afoul of regulations, because digital signatures do not obscure content — they authenticate it.
 
-For reasons unknown to me its very underutilized. 
+For reasons unknown to me its severely underutilized. 
 
 ---
 
